@@ -61,18 +61,58 @@ class HBNBCommand(cmd.Cmd):
         """Usage: show <class> <id> or <class>.show(<id>)
         Display the string representation of a class instance of a given id.
         """
-        argl = parse(arg)
+        arglist = parse(arg)
         objdict = storage.all()
-        if len(argl) == 0:
+        if len(arglist) == 0:
             print("** class name missing **")
-        elif argl[0] not in HBNBCommand.__classes:
+        elif arglist[0] not in HBNBCommand.__classes:
             print("** class doesn't exist **")
-        elif len(argl) == 1:
+        elif len(arglist) == 1:
             print("** instance id missing **")
-        elif "{}.{}".format(argl[0], argl[1]) not in objdict:
+        elif "{}.{}".format(arglist[0], arglist[1]) not in objdict:
             print("** no instance found **")
         else:
-            print(objdict["{}.{}".format(argl[0], argl[1])])
+            print(objdict["{}.{}".format(arglist[0], arglist[1])])
+
+    def do_destroy(self, arg):
+        """Usage: destroy <class> <id> or <class>.destroy(<id>)
+        Delete a class instance of a given id.
+        """
+        arglist = arg.split()
+        objdict = storage.all()
+        if not arglist:
+            print("** class name missing **")
+        elif arglist[0] not in HBNBCommand.__classes:
+            print("** class doesn't exist **")
+
+        elif len(arglist) == 1:
+            print("** instance id missing **")
+        elif "{}.{}".format(arglist[0], arglist[1]) not in objdict.keys():
+            print("** no instance found **")
+        else:
+            del objdict["{}.{}".format(arglist[0], arglist[1])]
+            storage.save()
+
+    def do_all(self, arg):
+        """
+            usage: all or all <class>
+        prints all string representation of all instances based or not
+        on the class name
+        """
+        arglist = arg.split()
+        objdict = storage.all()
+        instances_list = []
+        if not arglist:
+            for instance in objdict.values():
+                instances_list.append(str(instance))
+        elif arglist[0] not in HBNBCommand.__classes:
+            print("** class doesn't exist **")
+            return
+        else:
+            for instance in objdict.values():
+                if instance.__class__.__name__ == arglist[0]:
+                    instances_list.append(str(instance))
+        print(instances_list)
 
     def do_quit(self, arg):
         """Quit command to exit the program"""
