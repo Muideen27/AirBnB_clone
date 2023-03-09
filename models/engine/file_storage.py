@@ -3,6 +3,7 @@
 import json
 import datetime
 from models.base_model import BaseModel
+from models.user import User
 
 class FileStorage:
     """class for serialization and deserialization of base model"""
