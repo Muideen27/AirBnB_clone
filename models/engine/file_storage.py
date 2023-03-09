@@ -1,14 +1,22 @@
 #!/usr/bin/env python3
 """Module for FileStorage class"""
+
 import json
 import datetime
 from models.base_model import BaseModel
 from models.user import User
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.amenity import Amenity
+from models.state import State
+
 
 class FileStorage:
     """class for serialization and deserialization of base model"""
     __file_path = "file.json"
     __objects = {}
+    __classes = {"User", "Amenity", "Place", "City", "State", "BaseModel"}
 
     def all(self):
         """
