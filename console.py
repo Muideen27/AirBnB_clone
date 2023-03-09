@@ -8,6 +8,7 @@ from shlex import split
 from models import storage
 from  models.base_model import BaseModel
 
+
 def parse(arg):
     """Look for curly braces and square_brackets match using re"""
     curly_brace_match = re.search(r"\{(.*?)\}", arg)
