@@ -16,7 +16,8 @@ class FileStorage:
     """class for serialization and deserialization of base model"""
     __file_path = "file.json"
     __objects = {}
-    __classes = {"User", "Amenity", "Place", "City", "State", "BaseModel"}
+    __classes = {"User": User, "Amenity": Amenity, "Place": Place, "City":
+                 City, "State": State, "BaseModel": BaseModel}
 
     def all(self):
         """
