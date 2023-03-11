@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Module for FileStorage class"""
 
+
 import json
 import datetime
 from models.base_model import BaseModel
