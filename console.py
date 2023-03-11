@@ -49,6 +49,27 @@ class HBNBCommand(cmd.Cmd):
         "Review"
     }
 
+    def default(self, arg):
+        """Default behavior for cmd module when input is invalid"""
+        argdict = {
+            "all": self.do_all,
+            "show": self.do_show,
+            "destroy": self.do_destroy,
+            "count": self.do_count,
+            "update": self.do_update
+        }
+        match = re.search(r"\.", arg)
+        if match is not None:
+            argl = [arg[:match.span()[0]], arg[match.span()[1]:]]
+            match = re.search(r"\((.*?)\)", argl[1])
+            if match is not None:
+                command = [argl[1][:match.span()[0]], match.group()[1:-1]]
+                if command[0] in argdict.keys():
+                    call = "{} {}".format(argl[0], command[1])
+                    return argdict[command[0]](call)
+        print("*** Unknown syntax: {}".format(arg))
+        return False
+
     def do_create(self, line):
         """Usage: create <class> <key 1>=<value 2> <key 2>=<value 2> ...
         Create a new class instance with given keys/values and print its id.
@@ -140,6 +161,16 @@ class HBNBCommand(cmd.Cmd):
                 if instance.__class__.__name__ == arglist[0]:
                     instances_list.append(str(instance))
         print(instances_list)
+
+    def do_count(self, arg):
+        """Usage: count <class> or <class>.count()
+        Retrieve the number of instances of a given class."""
+        arglist = parse(arg)
+        count = 0
+        for obj in storage.all().values():
+            if arglist[0] == obj.__class__.__name__:
+                count += 1
+        print(count)
 
     def do_update(self, arg):
 
