@@ -6,7 +6,7 @@ import re
 import models
 from shlex import split
 from models import storage
-from  models.base_model import BaseModel
+from models.base_model import BaseModel
 from models.user import User
 from models.state import State
 from models.city import City
@@ -33,6 +33,7 @@ def parse(arg):
         token = [token.strip(",") for token in tokens]
         token.append(curly_brace_match.group())
         return token
+
 
 class HBNBCommand(cmd.Cmd):
     """class for HBNB command interpreter"""
@@ -104,7 +105,6 @@ class HBNBCommand(cmd.Cmd):
         except NameError:
             print("** class doesn't exist **")
 
-    
     def do_show(self, arg):
         """Usage: show <class> <id> or <class>.show(<id>)
         Display the string representation of a class instance of a given id.
@@ -222,7 +222,6 @@ class HBNBCommand(cmd.Cmd):
                     obj.__dict__[k] = v
         storage.save()
 
-
     def do_quit(self, arg):
         """Quit command to exit the program"""
         return True
@@ -235,6 +234,7 @@ class HBNBCommand(cmd.Cmd):
     def emptyline(self):
         """Do nothing on empty line"""
         pass
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
